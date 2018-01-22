@@ -25,7 +25,7 @@ class User extends Component {
     return (
       <div>{usersElement}</div>
     )*/
-  render () {
+  /*render () {
     return (
       <div>
       {users.map((user) => {
@@ -39,6 +39,17 @@ class User extends Component {
           )
       })}
       </div>
+      )
+  }*/
+  render() {
+    const {user} = this.props
+    return (
+      <p>
+        <span>姓名：{user.username}</span>
+        <span>年龄：{user.age}</span>
+        <span>性别：{user.gender}</span>
+        <hr/>
+      </p>
       )
   }
 }
@@ -99,10 +110,10 @@ class Header extends Component{
 class Main extends Component{
   render() {
     return (
-      <div>
+      <div className='main'>
         <h2>This is main content.</h2>
         <LikeButton likedText='已赞' unlikedText='赞' onClick={()=>console.log('clickLike button')}/>
-        <User/>
+        {users.map((user, i) => <User key={i} user={user} />)}
       </div>
     )
   }
@@ -110,7 +121,9 @@ class Main extends Component{
 class Footer extends Component{
   render() {
     return (
-      <h2>This is Footer.</h2>
+      <div className='footer'>
+        <h2>This is Footer.</h2>
+      </div>
     )
   }
 }
