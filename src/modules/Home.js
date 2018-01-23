@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import logo from '../logo.svg';
+import '../assets/css/home.css';
 
 const users = [
   { username: 'Jerry', age: 21, gender: 'male' },
@@ -9,6 +9,29 @@ const users = [
   { username: 'Lucy', age: 20, gender: 'female' }
 ]
 
+class Title extends Component{
+  handleClickOnTitle(word, e) {
+    console.log(this, word)
+    console.log(e.target.innerHTML)
+  }
+  render() {
+    return (
+      <h1 onClick={this.handleClickOnTitle.bind(this, 'word')}>React小书</h1>
+    )
+  }
+}
+class Header extends Component{
+  render() {
+    const isGood = true
+    return (
+      <header className="App-header">
+        <Title/>
+        <img src={logo} className="App-logo" alt="logo" />
+        <h6 className="App-title">Hello React {isGood ? <strong>is good</strong> : <strong>is not good</strong>}</h6>
+      </header>
+    )
+  }
+}
 class User extends Component {
   /*render() {
     const usersElement = []
@@ -48,9 +71,8 @@ class User extends Component {
         <span>姓名：{user.username}</span>
         <span>年龄：{user.age}</span>
         <span>性别：{user.gender}</span>
-        <hr/>
       </p>
-      )
+    )
   }
 }
 class LikeButton extends Component {
@@ -84,29 +106,6 @@ class LikeButton extends Component {
       )
   }
 }
-class Title extends Component{
-  handleClickOnTitle(word, e) {
-    console.log(this, word)
-    console.log(e.target.innerHTML)
-  }
-  render() {
-    return (
-      <h1 onClick={this.handleClickOnTitle.bind(this, 'word')}>React小书</h1>
-    )
-  }
-}
-class Header extends Component{
-  render() {
-    const isGood = true
-    return (
-      <header className="App-header">
-        <Title/>
-        <img src={logo} className="App-logo" alt="logo" />
-        <h6 className="App-title">Hello React {isGood ? <strong>is good</strong> : <strong>is not good</strong>}</h6>
-      </header>
-    )
-  }
-}
 class Main extends Component{
   render() {
     return (
@@ -129,7 +128,6 @@ class Footer extends Component{
 }
 class App extends Component {
   render() {
-    const isGood = true
     return (
       <div className="App">
         <Header/>
