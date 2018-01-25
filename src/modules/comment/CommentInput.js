@@ -1,12 +1,35 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import wrapWithLoadData from '../wrapWithLoadData.js'
 
 class CommentInput extends Component {
-  constructor () {
-    super()
+  static propType = {
+    onSubmit: PropTypes.func,
+    data: PropTypes.any,
+    saveData: PropTypes.func.isRequired
+  }
+  constructor (props) {
+    super(props)
     this.state = {
-      username: '',
+      username: props.data,
       content: ''
     }
+  }
+  // componentWillMount() {
+  //   this._loadUsername()
+  // }
+  // _loadUsername() {
+  //   const username = localStorage.getItem('username')
+  //   if(username) {
+  //     this.setState({username})
+  //   }
+  // }
+  // _saveUsername(username) { //私有方法以_开头
+  //   localStorage.setItem('username', username)
+  // }
+  handleUserNameBlur(event) {
+    // this._saveUsername(event.target.value)
+    this.props.saveData(event.target.value)
   }
   handleUserNameChange(event) {
     this.setState({
@@ -20,10 +43,16 @@ class CommentInput extends Component {
   }
   handleSubmit() {
     if(this.props.onSubmit) {
-      const {username, content} = this.state
-      this.props.onSubmit({username, content})
+      this.props.onSubmit({
+        username: this.state.username, 
+        content: this.state.content,
+        createdTime: +new Date()
+      })
     }
     this.setState({content: ''})
+  }
+  componentDidMount() {
+    this.textarea.focus()
   }
   render() {
     return (
@@ -31,13 +60,13 @@ class CommentInput extends Component {
         <div className='comment-field'>
           <span className='comment-field-name'>用户名：</span>
           <div className='comment-field-input'>
-            <input value={this.state.username} onChange={this.handleUserNameChange.bind(this)}/>
+            <input value={this.state.username} onBlur={this.handleUserNameBlur.bind(this)} onChange={this.handleUserNameChange.bind(this)}/>
           </div>
         </div>
         <div className='comment-field'>
           <span className='comment-field-name'>评论内容：</span>
           <div className='comment-field-input'>
-            <textarea value={this.state.content} onChange={this.handleContentChange.bind(this)}/>
+            <textarea ref={(textarea) => this.textarea=textarea} value={this.state.content} onChange={this.handleContentChange.bind(this)}/>
           </div>
         </div>
         <div className='comment-field-button'>
@@ -50,4 +79,5 @@ class CommentInput extends Component {
   }
 }
 
+CommentInput = wrapWithLoadData(CommentInput, 'username')
 export default CommentInput;

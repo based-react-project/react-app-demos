@@ -106,12 +106,14 @@ class LikeButton extends Component {
       )
   }
 }
+
 class Main extends Component{
   render() {
     return (
       <div className='main'>
-        <h2>This is main content.</h2>
+        <h2>点赞</h2>
         <LikeButton likedText='已赞' unlikedText='赞' onClick={()=>console.log('clickLike button')}/>
+        <h2>Map渲染</h2>
         {users.map((user, i) => <User key={i} user={user} />)}
       </div>
     )
